@@ -94,9 +94,11 @@ function draw(){
 
   if ( lives == 0){
     gameOver();
-    if(mouseIsPressed == true){
+    if(mouseIsPressed == true){ // if statement to start a new game 
       game();
-      lives = 2;
+      lives = 2; // resets lives
+      coinX = 200; // resets the coin position
+      score = 0; // resets score
     }
   }
 } // End of draw function 
