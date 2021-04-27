@@ -28,6 +28,23 @@ var rect5y = 250;
 var rect5Width = 50;
 var rect5Height = 60;
 
+//enemies 
+var squareEX=450;
+var squareEY=525; 
+var squareEWidth = 50;
+var squareEHeight = 50;
+
+
+// coins
+var coinX=200;
+var coinY=530;
+var coinWidth=20;
+var coinHeight=20;
+
+// score
+var score = 0; 
+var lives= 2;
+
 //gravity and jumping 
 var jump = false;
 var direction = 1; // the force of gravity in the y direction
@@ -56,6 +73,7 @@ function setup() //Makes the background
   
 } // end of setup 
 
+// draw function
 function draw(){
   //Runs the other two functions
   //keyPressed();
@@ -71,8 +89,35 @@ function draw(){
   }// close = 0
 
   if(mouseIsPressed == true){
-    stage =1
+    stage = 1;
   }//Clicks to start game
+
+  if ( lives == 0){
+    gameOver();
+    if(mouseIsPressed == true){
+      game();
+      lives = 2;
+    }
+  }
+} // End of draw function 
+
+function gameOver(){
+  {
+    //Appearance of Game
+    //background(135, 200, 200);
+     image(background, width/2, height/2, width, height);
+   
+     //title
+     textFont(marioFont);
+     fill(255);
+     stroke(0);
+     strokeWeight(10);
+     textSize(150);
+     text('GAME OVER', width/2, height/2);
+    
+     textSize(40);
+     text('CLICK THE SCREEN TO PLAY AGAIN', width/2, 550);
+  }
 }
 
 // Homescreen and insturctions function
@@ -117,6 +162,16 @@ function game()
   fill(100,0,0)
   //rect(squareX, squareY, squareW, squareH)
   image(deadpool,squareX, squareY, squareW, squareH);
+  //square(squareX,squareY,20);
+
+  //enemy
+  stroke(255);
+  strokeWeight(5);
+  fill(10,0,0)
+  rect(squareEX,squareEY,squareEWidth,squareEHeight)
+   
+   //coins
+  circle(coinX,coinY,20)
   
   //boxes 
   stroke(255);
@@ -126,15 +181,55 @@ function game()
   rect(rect4x, rect4y, rect4Width, rect4Height);
   rect(rect5x, rect5y, rect5Width, rect5Height);
   
-  //Map Barriers
-  if (squareX < 0){
-    squareX = squareX + move; // Stops the player from leaving the left screen
-  }
-  if (squareX >= width){
-    squareX = width - move; // Stops the player from leaving the right screen 
-  }
-  // End of map Barriers
+// scoreboard 
   
+  //textFont (fontRegular);
+  fill(255);
+  stroke(0);
+  strokeWeight(10);
+  textSize(20);
+  text('Points:',40,25)
+  text(score,90,25)
+  
+  //lives
+  
+  //textFont (fontRegular);
+  fill(255);
+  stroke(0);
+  strokeWeight(10);
+  textSize(20);
+  text('Lives:',150,25)
+  text(lives,200,25)
+  
+  // What happens when you collect a coin 
+  
+  if(squareX >= coinX-coinWidth/2 && squareX <=coinX+coinWidth/2 && squareY >= coinY-coinHeight/2 && squareY <= coinY+coinHeight/2)
+  {
+    
+    score = score+1;
+    coinX=-1000;
+    
+  } // close if statement
+
+//Map Barriers
+if (squareX < 0){
+  squareX = squareX + move; // Stops the player from leaving the left screen
+}
+if (squareX >= width){
+  squareX = width - move; // Stops the player from leaving the right screen 
+}
+// End of map Barriers
+
+//collisions with enemies 
+if(squareX >= squareEX-squareEWidth/2 && squareX <= squareEX+ squareEWidth/2 && squareY >= squareEY-squareEHeight/2 && squareY<= squareEY+squareEHeight/2 )
+{
+  lives = lives-1; //lose lives 
+  
+  squareX=10;
+  squareY=525;
+
+} // end of collisions with enemies
+
   //collisions
   if(squareX >= rect3x-rect3Width/2 && squareX <= rect3x+rect3Width/2 && squareY+squareH/2 >= rect3y-rect3Height/2 && squareY-squareH/2 <= rect3y+rect3Height/2 && jump == false){
     squareY = rect3y-65; //Don't fall
