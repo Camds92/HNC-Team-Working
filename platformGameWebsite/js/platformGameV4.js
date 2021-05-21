@@ -306,8 +306,8 @@ function keyTyped(){
 
 function preload(){
   marioFont = loadFont('images/smbfont.ttf');
-  deadpool = loadImage('images/deadpool.png');
-  background = loadImage('images/game_background.png');
+  deadpool = loadImage('images/c1.png');
+  background = loadImage('images/Background.png');
   //jumpSound = loadSound('images/jumping.wav');
 }
 
